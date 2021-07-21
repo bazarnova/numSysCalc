@@ -1,66 +1,59 @@
 import java.util.Scanner;
 
 public class NumSysCalc {
-    static Scanner scanner = new Scanner(System.in);
+
+    public static final String digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public static void main(String[] args){
 
-        String count = "4F1";
-        long degreeFrom;
-        long degreeTo;
+        String count;
+        int degreeFrom;
+        int degreeTo;
 
-        degreeFrom = 16;
-        degreeTo = 2;
+        count = "1MH";
+        degreeFrom = 26;
+        degreeTo = 10;
 
-        long result;
         String resultString;
 
         if(degreeTo == 10) {
-
-            System.out.println(changeToDecimal(count, degreeFrom));
+            resultString = changeToDecimal(count, degreeFrom);
         }
-        if(degreeFrom==10){
+        else if(degreeFrom==10){
 
-            System.out.println(changeFromDecimal(count, degreeTo));
+            resultString = changeFromDecimal(count, degreeTo);
         }
         else{
-            System.out.println(changeFromDecimal((changeToDecimal(count, degreeFrom)), degreeTo));
+            resultString = changeFromDecimal((changeToDecimal(count, degreeFrom)), degreeTo);
         }
+        System.out.println(resultString);
     }
 
-    private static String changeFromDecimal(String count, long degreeTo) {
+    private static String changeFromDecimal(String count, int degreeTo) {
         String resultString="";
-        int currentNumber = Integer.parseInt(count);
+        int currentNumber = Integer.parseInt(count.toUpperCase());
 
         while(currentNumber>0){
-            long modulo = currentNumber% degreeTo;
 
-            if(modulo>9){
-                resultString = resultString + (char)(modulo+55);
-            }
-            else {
-                resultString = resultString + modulo;
-            }
+            int remDiv = currentNumber % degreeTo;
+
+            resultString = digits.charAt(remDiv) + resultString;
             currentNumber/= degreeTo;
         }
-        String reversedString = new StringBuffer(resultString).reverse().toString();
-        return reversedString;
+        return resultString;
     }
 
     private static String changeToDecimal(String count, long degreeFrom) {
-        int result =0;
-        long degree = 0;
+        int result = 0;
+        int degree = 0;
         int currentNumber;
+        count = count.toUpperCase();
 
         for (int i = count.length() - 1; i >= 0; i--) {
-            char currentChar = count.charAt(i);
 
-            if(Character.isLetter(count.charAt(i))){
-                currentNumber = currentChar - 55;
-            }
-            else {
-                currentNumber = currentChar - '0';
-            }
+            char currentChar = count.charAt(i);
+            currentNumber = digits.indexOf(currentChar);
+
             result = result + currentNumber * (int) Math.pow(degreeFrom, degree);
             degree++;
         }
