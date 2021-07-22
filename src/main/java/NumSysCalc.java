@@ -4,41 +4,34 @@ public class NumSysCalc {
 
     public static final String digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Input number");
+        String count = scanner.nextLine();
+        System.out.println("Input number system from");
+        int degreeFrom = scanner.nextInt();
+        System.out.println("Input number system to");
+        int degreeTo = scanner.nextInt();
 
-        String count;
-        int degreeFrom;
-        int degreeTo;
+//        count = "1MH";
+//        degreeFrom = 26;
+//        degreeTo = 10;
 
-        count = "1MH";
-        degreeFrom = 26;
-        degreeTo = 10;
+        String resultString = changeFromDecimal((changeToDecimal(count, degreeFrom)), degreeTo);
 
-        String resultString;
-
-        if(degreeTo == 10) {
-            resultString = changeToDecimal(count, degreeFrom);
-        }
-        else if(degreeFrom==10){
-
-            resultString = changeFromDecimal(count, degreeTo);
-        }
-        else{
-            resultString = changeFromDecimal((changeToDecimal(count, degreeFrom)), degreeTo);
-        }
-        System.out.println(resultString);
+        System.out.println("Result: " + resultString);
     }
 
     private static String changeFromDecimal(String count, int degreeTo) {
-        String resultString="";
+        String resultString = "";
         int currentNumber = Integer.parseInt(count.toUpperCase());
 
-        while(currentNumber>0){
+        while (currentNumber > 0) {
 
             int remDiv = currentNumber % degreeTo;
 
             resultString = digits.charAt(remDiv) + resultString;
-            currentNumber/= degreeTo;
+            currentNumber /= degreeTo;
         }
         return resultString;
     }
